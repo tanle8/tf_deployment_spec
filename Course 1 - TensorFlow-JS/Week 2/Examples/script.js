@@ -15,7 +15,11 @@ function getModel() {
 	model.add(tf.layers.dense({ units: 128, activation: 'relu' }));
 	model.add(tf.layers.dense({ units: 10, activation: 'softmax' }));
 
-	model.compile({ optimizer: tf.train.adam(), loss: 'categoricalCrossentropy', metrics: ['accuracy'] });
+	model.compile({ 
+					optimizer: tf.train.adam(),
+					loss: 'categoricalCrossentropy',
+					metrics: ['accuracy'] 
+				  });
 
 	return model;
 }

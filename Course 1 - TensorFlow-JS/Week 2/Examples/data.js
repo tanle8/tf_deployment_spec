@@ -24,10 +24,8 @@ const TRAIN_TEST_RATIO = 5 / 6;
 const NUM_TRAIN_ELEMENTS = Math.floor(TRAIN_TEST_RATIO * NUM_DATASET_ELEMENTS);
 const NUM_TEST_ELEMENTS = NUM_DATASET_ELEMENTS - NUM_TRAIN_ELEMENTS;
 
-const MNIST_IMAGES_SPRITE_PATH =
-  'https://storage.googleapis.com/learnjs-data/model-builder/mnist_images.png';
-const MNIST_LABELS_PATH =
-  'https://storage.googleapis.com/learnjs-data/model-builder/mnist_labels_uint8';
+const MNIST_IMAGES_SPRITE_PATH = 'https://storage.googleapis.com/learnjs-data/model-builder/mnist_images.png';
+const MNIST_LABELS_PATH = 'https://storage.googleapis.com/learnjs-data/model-builder/mnist_labels_uint8';
 
 /**
  * A class that fetches the sprited MNIST dataset and returns shuffled batches.
@@ -104,6 +102,9 @@ export class MnistData {
       this.datasetLabels.slice(NUM_CLASSES * NUM_TRAIN_ELEMENTS);
   }
 
+  /* It going to takes the batch size and it takes that slice off the images
+  and returns that for us as a set of images, and did it with the test batch
+  */
   nextTrainBatch(batchSize) {
     return this.nextBatch(
       batchSize, [this.trainImages, this.trainLabels], () => {
