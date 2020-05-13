@@ -5,6 +5,7 @@ var rawImage;
 var model;
 
 function getModel() {
+	console.log("[LOG] getModel()")
 	model = tf.sequential();
 
 	model.add(tf.layers.conv2d({ inputShape: [28, 28, 1], kernelSize: 3, filters: 8, activation: 'relu' }));
@@ -15,16 +16,17 @@ function getModel() {
 	model.add(tf.layers.dense({ units: 128, activation: 'relu' }));
 	model.add(tf.layers.dense({ units: 10, activation: 'softmax' }));
 
-	model.compile({ 
-					optimizer: tf.train.adam(),
-					loss: 'categoricalCrossentropy',
-					metrics: ['accuracy'] 
-				  });
+	model.compile({
+		optimizer: tf.train.adam(),
+		loss: 'categoricalCrossentropy',
+		metrics: ['accuracy']
+	});
 
 	return model;
 }
 
 async function train(model, data) {
+	console.log("[LOG] train()")
 	const metrics = ['loss', 'val_loss', 'accuracy', 'val_accuracy'];
 	const container = { name: 'Model Training', styles: { height: '640px' } };
 	const fitCallbacks = tfvis.show.fitCallbacks(container, metrics);
@@ -59,11 +61,13 @@ async function train(model, data) {
 }
 
 function setPosition(e) {
+	console.log("[LOG] setPosition()")
 	pos.x = e.clientX - 100;
 	pos.y = e.clientY - 100;
 }
 
 function draw(e) {
+	console.log("[LOG] draw()")
 	if (e.buttons != 1) return;
 	ctx.beginPath();
 	ctx.lineWidth = 24;
@@ -77,11 +81,13 @@ function draw(e) {
 }
 
 function erase() {
+	console.log("[LOG] erase()")
 	ctx.fillStyle = "black";
 	ctx.fillRect(0, 0, 280, 280);
 }
 
 function save() {
+	console.log("[LOG] save()")
 	var raw = tf.browser.fromPixels(rawImage, 1);
 	var resized = tf.image.resizeBilinear(raw, [28, 28]);
 	var tensor = resized.expandDims(0);
@@ -92,6 +98,7 @@ function save() {
 }
 
 function init() {
+	console.log("[LOG] init()")
 	canvas = document.getElementById('canvas');
 	rawImage = document.getElementById('canvasimg');
 	ctx = canvas.getContext("2d");
@@ -108,6 +115,7 @@ function init() {
 
 
 async function run() {
+	console.log("[LOG] run()")
 	const data = new MnistData();
 	await data.load();
 	const model = getModel();
